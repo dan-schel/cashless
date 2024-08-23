@@ -1,2 +1,4 @@
 @use "css-template/import" as template;
 @include template.init;
+
+@include template.theme-dark-base;

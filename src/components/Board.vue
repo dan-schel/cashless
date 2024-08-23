@@ -1,87 +1,57 @@
 <script setup lang="ts">
+import Quadrants from "./Quadrants.vue";
 import PlayerControls from "./PlayerControls.vue";
 import { GameState } from "@/data/game-state";
+import { computed } from "vue";
 
-defineProps<{
+const props = defineProps<{
   gameState: GameState;
 }>();
+
+const topPlayer = computed(
+  () => props.gameState.players.find((p) => p.side === "top") ?? null,
+);
+const bottomPlayer = computed(
+  () => props.gameState.players.find((p) => p.side === "bottom") ?? null,
+);
+const leftPlayer = computed(
+  () => props.gameState.players.find((p) => p.side === "left") ?? null,
+);
+const rightPlayer = computed(
+  () => props.gameState.players.find((p) => p.side === "right") ?? null,
+);
 </script>
 
 <template>
-  <div class="board-container">
-    <div class="board">
-      <PlayerControls
-        v-for="(player, i) of gameState.players"
-        :key="i"
-        :class="{
-          player: true,
-          top: player.side === 'top',
-          bottom: player.side === 'bottom',
-          left: player.side === 'left',
-          right: player.side === 'right',
-        }"
-        :player="player"
-      />
-      <div>
-        <div class="line"></div>
-        <div class="line"></div>
-      </div>
-    </div>
-  </div>
+  <Quadrants>
+    <template #top v-if="topPlayer != null">
+      <PlayerControls :player="topPlayer"></PlayerControls>
+    </template>
+    <template #bottom v-if="bottomPlayer != null">
+      <PlayerControls :player="bottomPlayer"></PlayerControls>
+    </template>
+    <template #left v-if="leftPlayer != null">
+      <PlayerControls :player="leftPlayer"></PlayerControls>
+    </template>
+    <template #right v-if="rightPlayer != null">
+      <PlayerControls :player="rightPlayer"></PlayerControls>
+    </template>
+    <template #center>
+      <button class="menu"><p>Menu</p></button>
+    </template>
+  </Quadrants>
 </template>
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
 
-.board {
-  @include template.flex-grow;
-  position: relative;
-  background-color: var(--color-paper-20);
-  aspect-ratio: 1;
-  align-self: center;
+.menu {
+  @include template.button-filled-neutral;
+  @include template.content-text;
+  padding: 1rem;
 
-  height: min(100vh, 100vw);
-  width: min(100vh, 100vw);
-  height: min(100svh, 100svw);
-  width: min(100svh, 100svw);
-}
-.player {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-
-  --dist-from-center: min(32vh, 32vw);
-  --dist-from-center: min(32svh, 32svw);
-
-  &.top {
-    transform: translate(-50%, -50%) rotate(180deg)
-      translate(0, var(--dist-from-center));
-  }
-  &.bottom {
-    transform: translate(-50%, -50%) rotate(0deg)
-      translate(0, var(--dist-from-center));
-  }
-  &.left {
-    transform: translate(-50%, -50%) rotate(90deg)
-      translate(0, var(--dist-from-center));
-  }
-  &.right {
-    transform: translate(-50%, -50%) rotate(270deg)
-      translate(0, var(--dist-from-center));
-  }
-}
-.line {
-  position: absolute;
-  top: 50%;
-  left: -20.71%; // 41.42% / 2
-  width: 141.42%; // sqrt(2)
-  border-bottom: 1px solid var(--color-ink-20);
-
-  &:nth-child(1) {
-    transform: rotate(45deg);
-  }
-  &:nth-child(2) {
-    transform: rotate(-45deg);
+  p {
+    font-size: 1.5rem;
   }
 }
 </style>

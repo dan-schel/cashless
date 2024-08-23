@@ -26,6 +26,7 @@ defineProps<{
 .controls {
   align-items: center;
   gap: 1rem;
+  padding-bottom: 4rem;
 }
 
 .primary-actions,

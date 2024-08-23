@@ -10,6 +10,8 @@ function handleStart() {
   state.value = new GameState([
     new Player(1500, "bottom"),
     new Player(1500, "top"),
+    new Player(1500, "left"),
+    new Player(1500, "right"),
   ]);
 }
 </script>
@@ -32,10 +34,17 @@ main {
 }
 .menu {
   @include template.flex-grow;
+  justify-content: center;
+  align-items: center;
 }
 button {
-  @include template.button-hover;
-  font-size: 2rem;
+  @include template.button-filled;
+  @include template.content-text;
+  padding: 1rem;
+  p {
+    font-size: 2rem;
+    font-weight: bold;
+  }
 }
 .board {
   @include template.flex-grow;

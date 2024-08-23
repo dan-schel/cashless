@@ -4,16 +4,22 @@ import { Player } from "@/data/player";
 defineProps<{
   player: Player;
 }>();
+defineEmits<{
+  (e: "pay"): void;
+}>();
 </script>
 
 <template>
   <div class="controls">
     <p class="balance">${{ player.balance.toFixed() }}</p>
     <div class="primary-actions">
-      <button><p>Pay</p></button>
+      <button @click="() => $emit('pay')">
+        <p>Pay</p>
+      </button>
       <button><p>Earn</p></button>
     </div>
     <div class="secondary-actions">
+      <button><p>Free Parking</p></button>
       <button><p>Mortgage</p></button>
       <button><p>Unmortgage</p></button>
     </div>

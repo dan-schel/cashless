@@ -73,21 +73,13 @@ function handleStart() {
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
 
-button {
-  @include template.content-text;
-  padding: 1rem;
-}
 .start {
+  @include template.content-text;
   @include template.button-filled;
+  padding: 1rem;
   p {
     font-size: 1.5rem;
-  }
-}
-.join,
-.leave {
-  @include template.button-filled-neutral;
-  p {
-    font-size: 1.5rem;
+    font-weight: bold;
   }
 }
 </style>

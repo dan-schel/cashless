@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Board from "./components/Board.vue";
+import GamePage from "./components/GamePage.vue";
 import MainMenu from "./components/MainMenu.vue";
 import { GameState } from "./data/game-state";
 import { ref } from "vue";
@@ -14,7 +14,7 @@ function handleGameReady(newState: GameState) {
 <template>
   <main>
     <MainMenu v-if="state == null" @game-ready="handleGameReady"></MainMenu>
-    <Board v-else class="board" :game-state="state" /> -->
+    <GamePage v-else class="game-page" :game-state="state" /> -->
   </main>
 </template>
 
@@ -26,7 +26,7 @@ main {
   height: 100svh;
 }
 
-.board {
+.game-page {
   @include template.flex-grow;
 }
 </style>

@@ -3,6 +3,7 @@ import Lobby from "./Lobby.vue";
 import { GameState } from "@/data/game-state";
 import { Player } from "@/data/player";
 import { ref } from "vue";
+import { uuid } from "@dan-schel/js-utils";
 
 const emit = defineEmits<{
   (e: "gameReady", gameState: GameState): void;
@@ -22,16 +23,16 @@ function handleSubmitLobby(requestedPlayers: {
   const players: Player[] = [];
 
   if (requestedPlayers.top) {
-    players.push(new Player(1500, "top"));
+    players.push(new Player(uuid(), 1500, "top"));
   }
   if (requestedPlayers.bottom) {
-    players.push(new Player(1500, "bottom"));
+    players.push(new Player(uuid(), 11500, "bottom"));
   }
   if (requestedPlayers.left) {
-    players.push(new Player(1500, "left"));
+    players.push(new Player(uuid(), 11500, "left"));
   }
   if (requestedPlayers.right) {
-    players.push(new Player(1500, "right"));
+    players.push(new Player(uuid(), 11500, "right"));
   }
 
   emit("gameReady", new GameState(players));

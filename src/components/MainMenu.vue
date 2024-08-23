@@ -26,13 +26,13 @@ function handleSubmitLobby(requestedPlayers: {
     players.push(new Player(uuid(), 1500, "top"));
   }
   if (requestedPlayers.bottom) {
-    players.push(new Player(uuid(), 11500, "bottom"));
+    players.push(new Player(uuid(), 1500, "bottom"));
   }
   if (requestedPlayers.left) {
-    players.push(new Player(uuid(), 11500, "left"));
+    players.push(new Player(uuid(), 1500, "left"));
   }
   if (requestedPlayers.right) {
-    players.push(new Player(uuid(), 11500, "right"));
+    players.push(new Player(uuid(), 1500, "right"));
   }
 
   emit("gameReady", new GameState(players));

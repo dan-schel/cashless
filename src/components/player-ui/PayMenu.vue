@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import MoneyEntry from "./MoneyEntry.vue";
+import { ref } from "vue";
+
+const money = ref(0);
 </script>
 
 <template>
   <div class="menu">
-    <MoneyEntry></MoneyEntry>
+    <MoneyEntry v-model="money"></MoneyEntry>
   </div>
 </template>
 

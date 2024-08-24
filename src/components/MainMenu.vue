@@ -35,7 +35,7 @@ function handleSubmitLobby(requestedPlayers: {
     players.push(new Player(uuid(), 1500, "right"));
   }
 
-  emit("gameReady", new GameState(players));
+  emit("gameReady", new GameState(players, 0));
 }
 </script>
 

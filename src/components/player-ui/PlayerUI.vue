@@ -20,9 +20,19 @@ const menuOpen = ref<
   "pay" | "earn" | "free-parking" | "mortgage" | "unmortgage" | null
 >(null);
 
-function handlePay() {
+function openMenu(
+  menu: "pay" | "earn" | "free-parking" | "mortgage" | "unmortgage",
+) {
   emit("update:playerInControl", props.player.id);
-  menuOpen.value = "pay";
+  menuOpen.value = menu;
+}
+
+function closeMenu(newGameState?: GameState) {
+  if (newGameState != null) {
+    emit("update:gameState", newGameState);
+  }
+  emit("update:playerInControl", null);
+  menuOpen.value = null;
 }
 </script>
 
@@ -31,8 +41,17 @@ function handlePay() {
     v-if="playerInControl == null || playerInControl === player.id"
     class="player-ui"
   >
-    <PayMenu v-if="menuOpen === 'pay'"></PayMenu>
-    <MainControls v-else :player="player" @pay="handlePay"></MainControls>
+    <PayMenu
+      v-if="menuOpen === 'pay'"
+      :player="player"
+      :gameState="gameState"
+      @submit="
+        (to, amount) => {
+          closeMenu(gameState.afterPayment(player, to, amount));
+        }
+      "
+    ></PayMenu>
+    <MainControls v-else :player="player" @pay="openMenu('pay')"></MainControls>
   </div>
 </template>
 

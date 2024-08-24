@@ -18,7 +18,7 @@ function handleGameReady(newState: GameState) {
       class="main-menu"
       @game-ready="handleGameReady"
     ></MainMenu>
-    <GamePage v-else class="game-page" :game-state="state" />
+    <GamePage v-else class="game-page" v-model:game-state="state" />
   </main>
 </template>
 

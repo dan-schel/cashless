@@ -49,8 +49,8 @@ function handleBackspace() {
 
 .grid {
   display: grid;
-  grid-template-columns: 8rem 8rem 8rem;
-  grid-template-rows: auto 6rem 6rem 6rem 6rem;
+  grid-template-columns: 6rem 6rem 6rem;
+  grid-template-rows: auto 5rem 5rem 5rem 5rem;
   grid-template-areas:
     "value value value"
     "num-7 num-8 num-9"
@@ -59,12 +59,10 @@ function handleBackspace() {
     "num-0 num-0 backspace";
   column-gap: 1rem;
   row-gap: 1rem;
-  margin-bottom: 4rem;
 }
 
 .value {
   grid-area: value;
-  margin-bottom: 1rem;
   align-items: flex-end;
   justify-content: center;
   background-color: var(--color-ink-20);
@@ -82,7 +80,7 @@ button {
   align-items: center;
   justify-content: center;
   p {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 }
 

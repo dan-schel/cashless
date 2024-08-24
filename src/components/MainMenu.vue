@@ -55,13 +55,22 @@ function handleLoadGame() {
   emit("gameReady", loadedGame);
 }
 
+function handleCancelLobby() {
+  showLobby.value = false;
+}
+
 onMounted(() => {
   hasSavedGame.value = isSavedStateAvailable();
 });
 </script>
 
 <template>
-  <Lobby v-if="showLobby" class="lobby" @submit="handleSubmitLobby" />
+  <Lobby
+    v-if="showLobby"
+    class="lobby"
+    @submit="handleSubmitLobby"
+    @cancel="handleCancelLobby"
+  />
   <div v-else class="menu">
     <button class="new-game" @click="handleNewGame"><p>New game</p></button>
     <button class="load-game" @click="handleLoadGame" :disabled="!hasSavedGame">

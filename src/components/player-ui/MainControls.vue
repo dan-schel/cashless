@@ -8,6 +8,7 @@ defineEmits<{
   (e: "pay"): void;
   (e: "earn"): void;
   (e: "freeParking"): void;
+  (e: "go"): void;
 }>();
 </script>
 
@@ -28,8 +29,9 @@ defineEmits<{
     </div>
     <div class="secondary-actions">
       <button @click="() => $emit('freeParking')"><p>Free parking</p></button>
-      <button><p>Mortgage</p></button>
-      <button><p>Unmortgage</p></button>
+      <button @click="() => $emit('go')"><p>Go</p></button>
+      <!-- <button><p>Mortgage</p></button>
+      <button><p>Unmortgage</p></button> -->
     </div>
   </div>
 </template>

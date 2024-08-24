@@ -66,4 +66,12 @@ export class GameState {
     });
     return this.withPlayer(paidPlayer).with({ freeParkingBalance: 0 });
   }
+
+  afterPassingGo(player: Player): GameState {
+    return this.withPlayer(
+      player.with({
+        balance: player.balance + 200,
+      }),
+    );
+  }
 }

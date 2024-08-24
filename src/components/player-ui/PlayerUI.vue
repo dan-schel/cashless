@@ -75,6 +75,7 @@ function closeMenu(newGameState?: GameState) {
       @pay="openMenu('pay')"
       @earn="openMenu('earn')"
       @free-parking="openMenu('free-parking')"
+      @go="closeMenu(gameState.afterPassingGo(player))"
     ></MainControls>
   </div>
 </template>

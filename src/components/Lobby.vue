@@ -8,6 +8,7 @@ const emit = defineEmits<{
     e: "submit",
     players: { top: boolean; bottom: boolean; left: boolean; right: boolean },
   ): void;
+  (e: "cancel"): void;
 }>();
 
 const topJoined = ref(false);
@@ -63,9 +64,14 @@ function handleStart() {
       <LobbyPlayer :joined="rightJoined" @toggle="toggleRight"></LobbyPlayer>
     </template>
     <template #center>
-      <button v-if="playerCount >= 2" class="start" @click="handleStart">
-        <p>Start</p>
-      </button>
+      <div class="button-container">
+        <button v-if="playerCount >= 2" class="start" @click="handleStart">
+          <p>Start</p>
+        </button>
+        <button v-else class="cancel" @click="$emit('cancel')">
+          <p>Cancel</p>
+        </button>
+      </div>
     </template>
   </Quadrants>
 </template>
@@ -73,13 +79,27 @@ function handleStart() {
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
 
-.start {
+.button-container {
+  background-color: var(--color-paper-20);
+  padding: 0.5rem;
+}
+
+button {
   @include template.content-text;
-  @include template.button-filled;
   padding: 1rem;
   p {
     font-size: 1.5rem;
+  }
+}
+
+.start {
+  @include template.button-filled;
+  p {
     font-weight: bold;
   }
+}
+
+.cancel {
+  @include template.button-filled-neutral;
 }
 </style>

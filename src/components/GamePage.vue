@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Quadrants from "./Quadrants.vue";
 import PlayerUI from "./player-ui/PlayerUI.vue";
+import GameMenu from "./GameMenu.vue";
 import { GameState } from "@/data/game-state";
 import { computed, ref } from "vue";
 
@@ -10,8 +11,12 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: "update:gameState", value: GameState): void;
+  (e: "undo"): void;
+  (e: "redo"): void;
+  (e: "exit"): void;
 }>();
 
+const menuOpen = ref(false);
 const playerInControl = ref<string | null>(null);
 
 const topPlayer = computed(
@@ -26,11 +31,18 @@ const leftPlayer = computed(
 const rightPlayer = computed(
   () => props.gameState.players.find((p) => p.side === "right") ?? null,
 );
+
+function handleMenuButton() {
+  menuOpen.value = true;
+}
+function handleCloseMenu() {
+  menuOpen.value = false;
+}
 </script>
 
 <template>
   <Quadrants>
-    <template #top v-if="topPlayer != null">
+    <template #top v-if="topPlayer != null && !menuOpen">
       <PlayerUI
         v-model:player-in-control="playerInControl"
         :game-state="gameState"
@@ -38,7 +50,7 @@ const rightPlayer = computed(
         :player="topPlayer"
       ></PlayerUI>
     </template>
-    <template #bottom v-if="bottomPlayer != null">
+    <template #bottom v-if="bottomPlayer != null && !menuOpen">
       <PlayerUI
         v-model:player-in-control="playerInControl"
         :game-state="gameState"
@@ -46,7 +58,7 @@ const rightPlayer = computed(
         :player="bottomPlayer"
       ></PlayerUI>
     </template>
-    <template #left v-if="leftPlayer != null">
+    <template #left v-if="leftPlayer != null && !menuOpen">
       <PlayerUI
         v-model:player-in-control="playerInControl"
         :game-state="gameState"
@@ -54,7 +66,7 @@ const rightPlayer = computed(
         :player="leftPlayer"
       ></PlayerUI>
     </template>
-    <template #right v-if="rightPlayer != null">
+    <template #right v-if="rightPlayer != null && !menuOpen">
       <PlayerUI
         v-model:player-in-control="playerInControl"
         :game-state="gameState"
@@ -62,8 +74,15 @@ const rightPlayer = computed(
         :player="rightPlayer"
       ></PlayerUI>
     </template>
-    <template #center v-if="playerInControl == null">
-      <button class="menu"><p>Menu</p></button>
+    <template #center v-if="playerInControl == null || menuOpen">
+      <GameMenu
+        v-if="menuOpen"
+        @undo="$emit('undo')"
+        @redo="$emit('redo')"
+        @exit="$emit('exit')"
+        @close="handleCloseMenu"
+      ></GameMenu>
+      <button v-else class="menu" @click="handleMenuButton"><p>Menu</p></button>
     </template>
   </Quadrants>
 </template>

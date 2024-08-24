@@ -60,10 +60,10 @@ button {
   @include template.content-text;
   padding: 1rem;
   align-items: center;
-  text-align: center;
   p {
     font-size: 1.5rem;
     font-weight: bold;
+    text-align: center;
   }
 }
 .cancel {

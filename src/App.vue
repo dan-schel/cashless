@@ -9,6 +9,10 @@ const state = ref<GameState | null>(null);
 function handleGameReady(newState: GameState) {
   state.value = newState;
 }
+
+function handleExit() {
+  state.value = null;
+}
 </script>
 
 <template>
@@ -18,7 +22,12 @@ function handleGameReady(newState: GameState) {
       class="main-menu"
       @game-ready="handleGameReady"
     ></MainMenu>
-    <GamePage v-else class="game-page" v-model:game-state="state" />
+    <GamePage
+      v-else
+      class="game-page"
+      v-model:game-state="state"
+      @exit="handleExit"
+    />
   </main>
 </template>
 

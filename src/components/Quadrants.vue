@@ -47,6 +47,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
+  z-index: 1;
 
   --dist-from-center: min(50vh, 50vw);
   --dist-from-center: min(50svh, 50svw);
@@ -69,6 +70,7 @@
   }
   &.center {
     transform: translate(-50%, -50%);
+    z-index: 3;
   }
 }
 .line {
@@ -77,6 +79,7 @@
   left: -20.71%; // 41.42% / 2
   width: 141.42%; // sqrt(2)
   border-bottom: 1px solid var(--color-ink-20);
+  z-index: 2;
 
   &:nth-child(1) {
     transform: rotate(45deg);

@@ -110,7 +110,9 @@ button {
   @include template.content-text;
   padding: 1rem;
   align-items: center;
-  text-align: center;
+  p {
+    text-align: center;
+  }
 }
 
 .players button,

@@ -7,6 +7,7 @@ defineProps<{
 defineEmits<{
   (e: "pay"): void;
   (e: "earn"): void;
+  (e: "freeParking"): void;
 }>();
 </script>
 
@@ -26,7 +27,7 @@ defineEmits<{
       <button @click="() => $emit('earn')"><p>Earn</p></button>
     </div>
     <div class="secondary-actions">
-      <button><p>Free Parking</p></button>
+      <button @click="() => $emit('freeParking')"><p>Free Parking</p></button>
       <button><p>Mortgage</p></button>
       <button><p>Unmortgage</p></button>
     </div>

@@ -44,4 +44,11 @@ export class GameState {
   afterEarning(player: Player, amount: number): GameState {
     return this.withPlayer(player.with({ balance: player.balance + amount }));
   }
+
+  afterCollectingFreeParking(player: Player): GameState {
+    const paidPlayer = player.with({
+      balance: player.balance + this.freeParkingBalance,
+    });
+    return this.withPlayer(paidPlayer).with({ freeParkingBalance: 0 });
+  }
 }

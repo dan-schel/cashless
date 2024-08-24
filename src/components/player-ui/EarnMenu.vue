@@ -17,7 +17,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div class="money-entry-page">
+  <div class="earn-menu">
     <p class="title">How much?</p>
     <MoneyEntry class="money-entry" v-model="amount"></MoneyEntry>
     <button @click="handleSubmit" :disabled="amount <= 0">
@@ -29,7 +29,7 @@ function handleSubmit() {
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
 
-.money-entry-page {
+.earn-menu {
   gap: 1rem;
   padding-bottom: 4rem;
 }
@@ -40,7 +40,7 @@ function handleSubmit() {
   margin-bottom: 1rem;
 }
 
-.money-entry-page button {
+.earn-menu button {
   @include template.content-text;
   @include template.button-filled;
   padding: 1rem;

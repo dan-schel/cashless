@@ -5,6 +5,7 @@ import { ref } from "vue";
 import MainControls from "./MainControls.vue";
 import PayMenu from "./PayMenu.vue";
 import EarnMenu from "./EarnMenu.vue";
+import FreeParkingMenu from "./FreeParkingMenu.vue";
 
 const props = defineProps<{
   player: Player;
@@ -60,11 +61,18 @@ function closeMenu(newGameState?: GameState) {
         }
       "
     ></EarnMenu>
+    <FreeParkingMenu
+      v-else-if="menuOpen === 'free-parking'"
+      :game-state="gameState"
+      @cancel="closeMenu()"
+      @submit="closeMenu(gameState.afterCollectingFreeParking(player))"
+    ></FreeParkingMenu>
     <MainControls
       v-else
       :player="player"
       @pay="openMenu('pay')"
       @earn="openMenu('earn')"
+      @free-parking="openMenu('free-parking')"
     ></MainControls>
   </div>
 </template>

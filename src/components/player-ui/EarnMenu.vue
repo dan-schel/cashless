@@ -4,6 +4,7 @@ import { ref } from "vue";
 
 const emit = defineEmits<{
   (e: "submit", amount: number): void;
+  (e: "cancel"): void;
 }>();
 
 const amount = ref(0);
@@ -20,9 +21,14 @@ function handleSubmit() {
   <div class="earn-menu">
     <p class="title">How much?</p>
     <MoneyEntry class="money-entry" v-model="amount"></MoneyEntry>
-    <button @click="handleSubmit" :disabled="amount <= 0">
-      <p>Earn</p>
-    </button>
+    <div class="actions">
+      <button class="cancel" @click="$emit('cancel')">
+        <p>Cancel</p>
+      </button>
+      <button class="pay" @click="handleSubmit" :disabled="amount <= 0">
+        <p>Earn</p>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -40,9 +46,18 @@ function handleSubmit() {
   margin-bottom: 1rem;
 }
 
-.earn-menu button {
+.money-entry {
+  margin-bottom: 3rem;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+button {
   @include template.content-text;
-  @include template.button-filled;
   padding: 1rem;
   align-items: center;
   text-align: center;
@@ -51,8 +66,10 @@ function handleSubmit() {
     font-weight: bold;
   }
 }
-
-.money-entry {
-  margin-bottom: 3rem;
+.cancel {
+  @include template.button-filled-neutral;
+}
+.pay {
+  @include template.button-filled;
 }
 </style>

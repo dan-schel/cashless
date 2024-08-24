@@ -12,6 +12,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: "submit", to: Player | "bank" | "free-parking", amount: number): void;
+  (e: "cancel"): void;
 }>();
 
 const to = ref<Player | "bank" | "free-parking" | null>();
@@ -61,14 +62,22 @@ function handleSubmit() {
       <button @click="handleSelect('free-parking')">
         <p>Free parking</p>
       </button>
+      <button @click="$emit('cancel')">
+        <p>Cancel</p>
+      </button>
     </div>
   </div>
   <div class="money-entry-page" v-else>
     <p class="title">How much?</p>
     <MoneyEntry class="money-entry" v-model="amount"></MoneyEntry>
-    <button @click="handleSubmit" :disabled="amount <= 0">
-      <p>Pay</p>
-    </button>
+    <div class="actions">
+      <button class="cancel" @click="$emit('cancel')">
+        <p>Cancel</p>
+      </button>
+      <button class="pay" @click="handleSubmit" :disabled="amount <= 0">
+        <p>Pay</p>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -105,18 +114,28 @@ button {
 }
 
 .players button,
-.money-entry-page button {
+.pay {
   @include template.button-filled;
+}
+.players button,
+.pay,
+.cancel {
   p {
     font-size: 1.5rem;
     font-weight: bold;
   }
 }
 
-.secondary button {
+.secondary button,
+.cancel {
   @include template.button-filled-neutral;
 }
 .money-entry {
   margin-bottom: 3rem;
+}
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 </style>

@@ -47,6 +47,7 @@ function closeMenu(newGameState?: GameState) {
       v-if="menuOpen === 'pay'"
       :player="player"
       :gameState="gameState"
+      @cancel="closeMenu()"
       @submit="
         (to, amount) => {
           closeMenu(gameState.afterPayment(player, to, amount));
@@ -55,6 +56,7 @@ function closeMenu(newGameState?: GameState) {
     ></PayMenu>
     <EarnMenu
       v-else-if="menuOpen === 'earn'"
+      @cancel="closeMenu()"
       @submit="
         (amount) => {
           closeMenu(gameState.afterEarning(player, amount));

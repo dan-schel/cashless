@@ -1,10 +1,25 @@
-import type { Player } from "./player";
+import { z } from "zod";
+import { Player } from "./player";
 
 export class GameState {
   constructor(
     readonly players: Player[],
     readonly freeParkingBalance: number,
   ) {}
+
+  static readonly json = z
+    .object({
+      players: Player.json.array(),
+      freeParkingBalance: z.number(),
+    })
+    .transform((x) => new GameState(x.players, x.freeParkingBalance));
+
+  toJSON(): z.input<typeof GameState.json> {
+    return {
+      players: this.players.map((p) => p.toJSON()),
+      freeParkingBalance: this.freeParkingBalance,
+    };
+  }
 
   with({
     players = this.players,

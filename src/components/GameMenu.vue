@@ -1,4 +1,9 @@
 <script setup lang="ts">
+defineProps<{
+  canUndo: boolean;
+  canRedo: boolean;
+}>();
+
 defineEmits<{
   (e: "undo"): void;
   (e: "redo"): void;
@@ -9,10 +14,10 @@ defineEmits<{
 
 <template>
   <div class="game-menu">
-    <button @click="$emit('undo')"><p>Undo</p></button>
-    <button @click="$emit('redo')"><p>Redo</p></button>
-    <button @click="$emit('exit')"><p>Exit game</p></button>
+    <button @click="$emit('undo')" :disabled="!canUndo"><p>Undo</p></button>
+    <button @click="$emit('redo')" :disabled="!canRedo"><p>Redo</p></button>
     <button @click="$emit('close')"><p>Close menu</p></button>
+    <button @click="$emit('exit')"><p>Exit game</p></button>
   </div>
 </template>
 

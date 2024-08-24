@@ -1,31 +1,39 @@
 <script setup lang="ts">
 import GamePage from "./components/GamePage.vue";
 import MainMenu from "./components/MainMenu.vue";
-import { GameState } from "./data/game-state";
+import { GameStateHistory } from "./data/game-state-history";
 import { ref } from "vue";
+import { persistState } from "./data/persistence";
 
-const state = ref<GameState | null>(null);
+const stateHistory = ref<GameStateHistory | null>(null);
 
-function handleGameReady(newState: GameState) {
-  state.value = newState;
+function handleGameReady(newStateHistory: GameStateHistory) {
+  stateHistory.value = newStateHistory;
+  persistState(newStateHistory);
+}
+
+function handleStateHistoryUpdate(newStateHistory: GameStateHistory) {
+  stateHistory.value = newStateHistory;
+  persistState(newStateHistory);
 }
 
 function handleExit() {
-  state.value = null;
+  stateHistory.value = null;
 }
 </script>
 
 <template>
   <main>
     <MainMenu
-      v-if="state == null"
+      v-if="stateHistory == null"
       class="main-menu"
       @game-ready="handleGameReady"
     ></MainMenu>
     <GamePage
       v-else
       class="game-page"
-      v-model:game-state="state"
+      :game-state-history="stateHistory"
+      @update:game-state-history="handleStateHistoryUpdate"
       @exit="handleExit"
     />
   </main>

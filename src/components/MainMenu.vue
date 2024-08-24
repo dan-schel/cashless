@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import Lobby from "./Lobby.vue";
 import { GameState } from "@/data/game-state";
+import { GameStateHistory } from "@/data/game-state-history";
 import { Player } from "@/data/player";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { uuid } from "@dan-schel/js-utils";
+import { isSavedStateAvailable, loadState } from "@/data/persistence";
 
 const emit = defineEmits<{
-  (e: "gameReady", gameState: GameState): void;
+  (e: "gameReady", gameState: GameStateHistory): void;
 }>();
 
 const showLobby = ref(false);
+const hasSavedGame = ref(false);
 
 function handleNewGame() {
   showLobby.value = true;
 }
+
 function handleSubmitLobby(requestedPlayers: {
   top: boolean;
   bottom: boolean;
@@ -35,15 +39,34 @@ function handleSubmitLobby(requestedPlayers: {
     players.push(new Player(uuid(), 1500, "right"));
   }
 
-  emit("gameReady", new GameState(players, 0));
+  const newGame = new GameStateHistory(new GameState(players, 0), [], []);
+
+  emit("gameReady", newGame);
 }
+
+function handleLoadGame() {
+  const loadedGame = loadState();
+
+  if (loadedGame == null) {
+    alert("Failed to load save game.");
+    return;
+  }
+
+  emit("gameReady", loadedGame);
+}
+
+onMounted(() => {
+  hasSavedGame.value = isSavedStateAvailable();
+});
 </script>
 
 <template>
   <Lobby v-if="showLobby" class="lobby" @submit="handleSubmitLobby" />
   <div v-else class="menu">
     <button class="new-game" @click="handleNewGame"><p>New game</p></button>
-    <button class="load-game"><p>Load game</p></button>
+    <button class="load-game" @click="handleLoadGame" :disabled="!hasSavedGame">
+      <p>Load game</p>
+    </button>
   </div>
 </template>
 

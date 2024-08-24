@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "@dan-schel/js-utils": "^3.2.2",
-    "vue": "^3.4.29"
+    "vue": "^3.4.29",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",

@@ -6,17 +6,24 @@ defineProps<{
 }>();
 defineEmits<{
   (e: "pay"): void;
+  (e: "earn"): void;
 }>();
 </script>
 
 <template>
   <div class="controls">
-    <p class="balance">${{ player.balance.toFixed() }}</p>
+    <p class="balance">
+      {{
+        player.balance >= 0
+          ? `$${player.balance.toFixed()}`
+          : `-$${Math.abs(player.balance).toFixed()}`
+      }}
+    </p>
     <div class="primary-actions">
       <button @click="() => $emit('pay')">
         <p>Pay</p>
       </button>
-      <button><p>Earn</p></button>
+      <button @click="() => $emit('earn')"><p>Earn</p></button>
     </div>
     <div class="secondary-actions">
       <button><p>Free Parking</p></button>

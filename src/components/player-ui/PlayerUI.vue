@@ -4,6 +4,7 @@ import { GameState } from "@/data/game-state";
 import { ref } from "vue";
 import MainControls from "./MainControls.vue";
 import PayMenu from "./PayMenu.vue";
+import EarnMenu from "./EarnMenu.vue";
 
 const props = defineProps<{
   player: Player;
@@ -51,7 +52,20 @@ function closeMenu(newGameState?: GameState) {
         }
       "
     ></PayMenu>
-    <MainControls v-else :player="player" @pay="openMenu('pay')"></MainControls>
+    <EarnMenu
+      v-else-if="menuOpen === 'earn'"
+      @submit="
+        (amount) => {
+          closeMenu(gameState.afterEarning(player, amount));
+        }
+      "
+    ></EarnMenu>
+    <MainControls
+      v-else
+      :player="player"
+      @pay="openMenu('pay')"
+      @earn="openMenu('earn')"
+    ></MainControls>
   </div>
 </template>
 

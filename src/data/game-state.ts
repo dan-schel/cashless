@@ -40,4 +40,8 @@ export class GameState {
 
     return state;
   }
+
+  afterEarning(player: Player, amount: number): GameState {
+    return this.withPlayer(player.with({ balance: player.balance + amount }));
+  }
 }

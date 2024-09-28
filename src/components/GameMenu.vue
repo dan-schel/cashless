@@ -27,7 +27,7 @@ defineEmits<{
 .game-menu {
   gap: 1rem;
   padding: 2rem;
-  background-color: var(--color-paper-30);
+  background-color: var(--color-background-dialog);
   border-radius: 1rem;
 }
 

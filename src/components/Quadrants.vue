@@ -34,7 +34,7 @@
 }
 .quadrants-area {
   position: relative;
-  background-color: var(--color-paper-20);
+  background-color: var(--color-board);
   aspect-ratio: 1;
   align-self: center;
 
@@ -78,7 +78,7 @@
   top: 50%;
   left: -20.71%; // 41.42% / 2
   width: 141.42%; // sqrt(2)
-  border-bottom: 1px solid var(--color-ink-20);
+  border-bottom: 1px solid var(--color-soft-border);
   z-index: 2;
 
   &:nth-child(1) {

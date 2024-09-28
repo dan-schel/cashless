@@ -116,7 +116,7 @@ function handleCloseMenu() {
 @use "@/assets/css-template/import" as template;
 
 .menu-button-container {
-  background-color: var(--color-paper-20);
+  background-color: var(--color-board);
   padding: 0.5rem;
 }
 

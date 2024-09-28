@@ -1,4 +1,16 @@
 @use "css-template/import" as template;
-@include template.init;
+
+@include template.init(
+  $custom-colors: (
+    "board": (
+      "light": template.theme-light-paper(20),
+      "dark": template.theme-dark-paper(20),
+    ),
+  )
+);
 
 @include template.theme-dark-base;
+
+:root {
+  font-family: Optima, Candara, "Noto Sans", source-sans-pro, sans-serif;
+}

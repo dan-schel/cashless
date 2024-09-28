@@ -65,7 +65,7 @@ function handleBackspace() {
   grid-area: value;
   align-items: flex-end;
   justify-content: center;
-  background-color: var(--color-ink-20);
+  background-color: var(--color-soft-border);
   padding: 0 1rem;
   border-radius: 0.5rem;
   height: 6rem;

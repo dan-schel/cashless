@@ -78,6 +78,7 @@ function handleStart() {
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .button-container {
   background-color: var(--color-board);
@@ -85,18 +86,11 @@ function handleStart() {
 }
 
 button {
-  @include template.content-text;
-  padding: 1rem;
-  p {
-    font-size: 1.5rem;
-  }
+  @include utils.big-button;
 }
 
 .start {
   @include template.button-filled;
-  p {
-    font-weight: bold;
-  }
 }
 
 .cancel {

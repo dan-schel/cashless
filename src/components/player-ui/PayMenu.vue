@@ -83,11 +83,12 @@ function handleSubmit() {
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .to-select,
 .money-entry-page {
   gap: 1rem;
-  padding-bottom: 4rem;
+  padding-bottom: 3rem;
 }
 
 .to-select {
@@ -106,34 +107,21 @@ function handleSubmit() {
   gap: 1rem;
 }
 
-button {
-  @include template.content-text;
-  padding: 1rem;
-  align-items: center;
-  p {
-    text-align: center;
-  }
-}
-
 .players button,
 .pay {
+  @include utils.big-button;
   @include template.button-filled;
 }
-.players button,
-.pay,
-.cancel {
-  p {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+.secondary button {
+  @include utils.small-button;
+  @include template.button-filled-neutral;
 }
-
-.secondary button,
 .cancel {
+  @include utils.big-button;
   @include template.button-filled-neutral;
 }
 .money-entry {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .actions {
   display: grid;

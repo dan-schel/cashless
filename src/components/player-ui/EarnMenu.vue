@@ -34,10 +34,11 @@ function handleSubmit() {
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .earn-menu {
   gap: 1rem;
-  padding-bottom: 4rem;
+  padding-bottom: 3rem;
 }
 
 .title {
@@ -47,7 +48,7 @@ function handleSubmit() {
 }
 
 .money-entry {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .actions {
@@ -56,20 +57,12 @@ function handleSubmit() {
   gap: 1rem;
 }
 
-button {
-  @include template.content-text;
-  padding: 1rem;
-  align-items: center;
-  p {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-  }
-}
 .cancel {
   @include template.button-filled-neutral;
+  @include utils.big-button;
 }
 .pay {
   @include template.button-filled;
+  @include utils.big-button;
 }
 </style>

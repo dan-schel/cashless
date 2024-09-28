@@ -72,6 +72,7 @@ onMounted(() => {
     @cancel="handleCancelLobby"
   />
   <div v-else class="menu">
+    <p class="title">Cashless</p>
     <button class="new-game" @click="handleNewGame"><p>New game</p></button>
     <button class="load-game" @click="handleLoadGame" :disabled="!hasSavedGame">
       <p>Load game</p>
@@ -81,12 +82,19 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .menu {
   @include template.flex-grow;
   gap: 1rem;
   justify-content: center;
   align-items: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
 button {
@@ -96,16 +104,11 @@ button {
 
 .new-game {
   @include template.button-filled;
-  p {
-    font-size: 2rem;
-    font-weight: bold;
-  }
+  @include utils.big-button;
 }
 
 .load-game {
   @include template.button-filled-neutral;
-  p {
-    font-size: 1.5rem;
-  }
+  @include utils.small-button;
 }
 </style>

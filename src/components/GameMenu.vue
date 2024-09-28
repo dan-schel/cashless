@@ -14,38 +14,58 @@ defineEmits<{
 
 <template>
   <div class="game-menu">
-    <button @click="$emit('undo')" :disabled="!canUndo"><p>Undo</p></button>
-    <button @click="$emit('redo')" :disabled="!canRedo"><p>Redo</p></button>
-    <button @click="$emit('close')"><p>Close menu</p></button>
-    <button @click="$emit('exit')"><p>Exit game</p></button>
+    <div class="title-row">
+      <p class="title">Game menu</p>
+      <button @click="$emit('close')"><p>X</p></button>
+    </div>
+    <div class="options">
+      <button @click="$emit('undo')" :disabled="!canUndo"><p>Undo</p></button>
+      <button @click="$emit('redo')" :disabled="!canRedo"><p>Redo</p></button>
+      <button @click="$emit('exit')"><p>Exit game</p></button>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .game-menu {
-  gap: 1rem;
+  gap: 2rem;
   padding: 2rem;
   background-color: var(--color-background-dialog);
   border-radius: 1rem;
 }
 
-button {
-  @include template.button-filled-neutral;
-  @include template.content-text;
-  padding: 1rem;
-  align-items: center;
-  min-width: 15rem;
-  p {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-  }
+.title-row {
+  @include template.row;
+  justify-content: space-between;
 
-  &:nth-child(4) {
+  button {
+    @include template.button-hover;
+    @include template.content-text;
+    p {
+      font-size: 1.5rem;
+    }
+  }
+}
+.title {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.options {
+  gap: 1rem;
+}
+.options button {
+  @include utils.big-button;
+  min-width: 15rem;
+
+  &:nth-child(3) {
     @include template.button-filled;
-    margin-top: 2rem;
+  }
+  &:not(:nth-child(3)) {
+    @include template.button-filled-neutral;
   }
 }
 </style>

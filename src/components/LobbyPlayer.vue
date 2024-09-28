@@ -20,17 +20,14 @@ defineEmits<{
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .lobby-player {
   margin-bottom: 4rem;
 }
 
 button {
-  @include template.content-text;
+  @include utils.big-button;
   @include template.button-filled-neutral;
-  padding: 1rem;
-  p {
-    font-size: 1.5rem;
-  }
 }
 </style>

@@ -32,20 +32,21 @@ const emit = defineEmits<{
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .free-parking-page {
   align-items: center;
   gap: 1rem;
-  padding-bottom: 4rem;
+  padding-bottom: 3rem;
 }
 
 .title {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .balance {
-  font-size: 4rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
 }
 
@@ -54,19 +55,12 @@ const emit = defineEmits<{
   gap: 1rem;
 }
 
-button {
-  @include template.content-text;
-  @include template.button-filled;
-  padding: 1rem;
-  p {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-}
 .cancel {
   @include template.button-filled-neutral;
+  @include utils.big-button;
 }
 .collect {
   @include template.button-filled;
+  @include utils.big-button;
 }
 </style>

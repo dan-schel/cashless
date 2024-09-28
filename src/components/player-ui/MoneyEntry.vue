@@ -49,8 +49,8 @@ function handleBackspace() {
 
 .grid {
   display: grid;
-  grid-template-columns: 6rem 6rem 6rem;
-  grid-template-rows: auto 5rem 5rem 5rem 5rem;
+  grid-template-columns: 5rem 5rem 5rem;
+  grid-template-rows: auto 4rem 4rem 4rem 4rem;
   grid-template-areas:
     "value value value"
     "num-7 num-8 num-9"
@@ -80,7 +80,7 @@ button {
   align-items: center;
   justify-content: center;
   p {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 }
 

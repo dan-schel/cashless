@@ -114,6 +114,7 @@ function handleCloseMenu() {
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .menu-button-container {
   background-color: var(--color-board);
@@ -122,11 +123,6 @@ function handleCloseMenu() {
 
 .menu {
   @include template.button-filled-neutral;
-  @include template.content-text;
-  padding: 1rem;
-
-  p {
-    font-size: 1.5rem;
-  }
+  @include utils.big-button;
 }
 </style>

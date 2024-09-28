@@ -38,11 +38,12 @@ defineEmits<{
 
 <style scoped lang="scss">
 @use "@/assets/css-template/import" as template;
+@use "@/assets/utils" as utils;
 
 .controls {
   align-items: center;
   gap: 1rem;
-  padding-bottom: 4rem;
+  padding-bottom: 3rem;
 }
 
 .primary-actions,
@@ -51,28 +52,22 @@ defineEmits<{
   gap: 1rem;
 }
 
-button {
-  @include template.content-text;
-  padding: 1rem;
-}
 .primary-actions {
   button {
     @include template.button-filled;
-    p {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
+    @include utils.big-button;
   }
 }
 .secondary-actions {
   button {
     @include template.button-filled-neutral;
+    @include utils.small-button;
   }
 }
 
 .balance {
   text-align: center;
-  font-size: 4rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
 }
 </style>

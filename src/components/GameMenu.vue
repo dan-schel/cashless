@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useFullscreen } from "@/hooks/fullscreen";
+
 defineProps<{
   canUndo: boolean;
   canRedo: boolean;
@@ -10,6 +12,8 @@ defineEmits<{
   (e: "exit"): void;
   (e: "close"): void;
 }>();
+
+const { isFullscreen, toggleFullscreen } = useFullscreen();
 </script>
 
 <template>
@@ -21,6 +25,11 @@ defineEmits<{
     <div class="options">
       <button @click="$emit('undo')" :disabled="!canUndo"><p>Undo</p></button>
       <button @click="$emit('redo')" :disabled="!canRedo"><p>Redo</p></button>
+      <button @click="toggleFullscreen">
+        <p>
+          {{ !isFullscreen ? "Enter fullscreen" : "Exit fullscreen" }}
+        </p>
+      </button>
       <button @click="$emit('exit')"><p>Exit game</p></button>
     </div>
   </div>
@@ -61,10 +70,14 @@ defineEmits<{
   @include utils.big-button;
   min-width: 15rem;
 
-  &:nth-child(3) {
+  &:nth-child(4) {
     @include template.button-filled;
+    --color-accent: var(--color-error);
+    --color-accent-hover: var(--color-error-hover);
+    --color-accent-active: var(--color-error-active);
+    margin-top: 2rem;
   }
-  &:not(:nth-child(3)) {
+  &:not(:nth-child(4)) {
     @include template.button-filled-neutral;
   }
 }

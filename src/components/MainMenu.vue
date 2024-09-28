@@ -6,6 +6,7 @@ import { Player } from "@/data/player";
 import { onMounted, ref } from "vue";
 import { uuid } from "@dan-schel/js-utils";
 import { isSavedStateAvailable, loadState } from "@/data/persistence";
+import { useFullscreen } from "@/hooks/fullscreen";
 
 const emit = defineEmits<{
   (e: "gameReady", gameState: GameStateHistory): void;
@@ -62,6 +63,8 @@ function handleCancelLobby() {
 onMounted(() => {
   hasSavedGame.value = isSavedStateAvailable();
 });
+
+const { isFullscreen, toggleFullscreen } = useFullscreen();
 </script>
 
 <template>
@@ -76,6 +79,11 @@ onMounted(() => {
     <button class="new-game" @click="handleNewGame"><p>New game</p></button>
     <button class="load-game" @click="handleLoadGame" :disabled="!hasSavedGame">
       <p>Load game</p>
+    </button>
+    <button class="toggle-fullscreen" @click="toggleFullscreen">
+      <p>
+        {{ !isFullscreen ? "Enter fullscreen" : "Exit fullscreen" }}
+      </p>
     </button>
   </div>
 </template>
@@ -107,7 +115,8 @@ button {
   @include utils.big-button;
 }
 
-.load-game {
+.load-game,
+.toggle-fullscreen {
   @include template.button-filled-neutral;
   @include utils.small-button;
 }

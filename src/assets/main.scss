@@ -1,10 +1,21 @@
 @use "css-template/import" as template;
 
 @include template.init(
+  $themes: (
+    "dark": template.$theme-dark-definition,
+  ),
   $custom-colors: (
     "board": (
-      "light": template.theme-light-paper(20),
       "dark": template.theme-dark-paper(20),
+    ),
+    "error": (
+      "dark": hsl(0, 80%, 60%),
+    ),
+    "error-hover": (
+      "dark": hsl(0, 90%, 65%),
+    ),
+    "error-active": (
+      "dark": hsl(0, 70%, 55%),
     ),
   )
 );

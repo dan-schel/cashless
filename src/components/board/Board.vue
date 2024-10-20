@@ -1,10 +1,24 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { spaces } from "./spaces";
+import {
+  houseCategories,
+  mortgagableCategories,
+  spaces,
+  type BoardSpaceId,
+} from "./spaces";
 import { getBoardEdge, rotatePosition } from "./rotation";
 import MdiTrainCrossingLight from "../icons/MdiTrainCrossingLight.vue";
 import MdiTap from "../icons/MdiTap.vue";
 import HeroiconsBoltSolid from "../icons/HeroiconsBoltSolid.vue";
+import MdiCheckBold from "../icons/MdiCheckBold.vue";
+
+const props = defineProps<{
+  modelValue: BoardSpaceId[];
+}>();
+
+const emit = defineEmits<{
+  (e: "update:modelValue", value: BoardSpaceId[]): void;
+}>();
 
 const rotatedSpaces = computed(() => {
   return spaces.map((space) => {
@@ -20,21 +34,17 @@ const rotatedSpaces = computed(() => {
       cssClasses.push(boardEdge);
     }
 
-    const isHouse =
-      space.category != null &&
-      [
-        "brown",
-        "light-blue",
-        "pink",
-        "orange",
-        "red",
-        "yellow",
-        "green",
-        "dark-blue",
-      ].includes(space.category);
+    const isHouse = houseCategories.includes(space.category);
     if (isHouse) {
       cssClasses.push("house");
     }
+
+    const isMortgagable = mortgagableCategories.includes(space.category);
+    if (isMortgagable) {
+      cssClasses.push("mortgagable");
+    }
+
+    const isSelected = props.modelValue.includes(space.id);
 
     return {
       ...space,
@@ -42,11 +52,22 @@ const rotatedSpaces = computed(() => {
       column: position.column,
       cssClasses,
       isHouse,
+      isMortgagable,
+      isSelected,
     };
   });
 });
 
-// TODO: Add your code here.
+function handleSpaceClick(id: BoardSpaceId) {
+  if (props.modelValue.includes(id)) {
+    emit(
+      "update:modelValue",
+      props.modelValue.filter((i) => i !== id),
+    );
+  } else {
+    emit("update:modelValue", [...props.modelValue, id]);
+  }
+}
 </script>
 
 <template>
@@ -55,11 +76,13 @@ const rotatedSpaces = computed(() => {
       <div class="center">
         <slot name="center"></slot>
       </div>
-      <div
+      <button
         v-for="space in rotatedSpaces"
         :key="space.id"
         :class="space.cssClasses"
         :style="`grid-column: ${space.column + 1}; grid-row: ${space.row + 1};`"
+        :disabled="!space.isMortgagable"
+        @click="handleSpaceClick(space.id)"
       >
         <div class="house-bar" v-if="space.isHouse"></div>
         <MdiTrainCrossingLight
@@ -69,7 +92,10 @@ const rotatedSpaces = computed(() => {
           v-if="space.id === 'utility-1'"
         ></HeroiconsBoltSolid>
         <MdiTap v-if="space.id === 'utility-2'"></MdiTap>
-      </div>
+        <div class="selected-check" v-if="space.isSelected">
+          <MdiCheckBold></MdiCheckBold>
+        </div>
+      </button>
     </div>
   </div>
 </template>
@@ -100,18 +126,20 @@ const rotatedSpaces = computed(() => {
   grid-row: 2 / span 9;
 }
 .space {
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 0.4rem,
-    var(--color-soft) 0.4rem,
-    var(--color-soft) 0.6rem
-  );
+  // For the selected-check.
+  position: relative;
 
-  &.house,
-  &.station,
-  &.utility {
-    background: var(--color-soft);
+  &.mortgagable {
+    @include template.button-filled-neutral;
+  }
+  &:not(.mortgagable) {
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 0.4rem,
+      var(--color-soft) 0.4rem,
+      var(--color-soft) 0.6rem
+    );
   }
 
   &.house {
@@ -172,6 +200,23 @@ const rotatedSpaces = computed(() => {
     svg {
       font-size: 3rem;
       color: var(--color-text-weak);
+    }
+  }
+
+  .selected-check {
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--color-white);
+    border-radius: 1.5rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    justify-content: center;
+    svg {
+      font-size: 2.5rem;
+      color: var(--color-on-accent);
     }
   }
 }

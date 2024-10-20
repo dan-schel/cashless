@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { GameState } from "@/data/game-state";
 import Board from "../board/Board.vue";
+import type { BoardSpaceId } from "../board/spaces";
+import { ref } from "vue";
 
 defineProps<{
   gameState: GameState;
 }>();
+
+const selectedSpaces = ref<BoardSpaceId[]>([]);
 
 const emit = defineEmits<{
   (e: "cancel"): void;
@@ -13,7 +17,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Board>
+  <Board v-model="selectedSpaces">
     <template #center>
       <p class="title">Mortgage</p>
       <button class="cancel-button" @click="emit('cancel')">

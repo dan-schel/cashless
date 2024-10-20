@@ -147,6 +147,7 @@ function handleSpaceClick(id: BoardSpaceId) {
 
   &.mortgagable {
     @include template.button-filled-neutral;
+    --button-rounding: 0;
   }
   &:not(.mortgagable) {
     background: repeating-linear-gradient(
@@ -164,6 +165,7 @@ function handleSpaceClick(id: BoardSpaceId) {
     .house-bar {
       background-color: var(--color-accent);
       grid-area: house-bar;
+      align-self: stretch;
     }
 
     &.top {

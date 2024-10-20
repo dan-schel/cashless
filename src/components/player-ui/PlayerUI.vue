@@ -6,6 +6,7 @@ import MainControls from "./MainControls.vue";
 import PayMenu from "./PayMenu.vue";
 import EarnMenu from "./EarnMenu.vue";
 import FreeParkingMenu from "./FreeParkingMenu.vue";
+import MortgageMenu from "./MortgageMenu.vue";
 
 const props = defineProps<{
   player: Player;
@@ -69,6 +70,12 @@ function closeMenu(newGameState?: GameState) {
       @cancel="closeMenu()"
       @submit="closeMenu(gameState.afterCollectingFreeParking(player))"
     ></FreeParkingMenu>
+    <MortgageMenu
+      v-else-if="menuOpen === 'mortgage'"
+      :game-state="gameState"
+      @cancel="closeMenu()"
+    >
+    </MortgageMenu>
     <MainControls
       v-else
       :player="player"
@@ -76,6 +83,8 @@ function closeMenu(newGameState?: GameState) {
       @earn="openMenu('earn')"
       @free-parking="openMenu('free-parking')"
       @go="closeMenu(gameState.afterPassingGo(player))"
+      @mortgage="openMenu('mortgage')"
+      @unmortgage="openMenu('unmortgage')"
     ></MainControls>
   </div>
 </template>

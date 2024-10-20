@@ -6,8 +6,9 @@ import { computed, ref } from "vue";
 import { unmortgagePrices } from "../board/prices";
 import type { Player } from "@/data/player";
 import { formatMoney } from "../utils";
+import { chooseRotation } from "../board/rotation";
 
-defineProps<{
+const props = defineProps<{
   player: Player;
   gameState: GameState;
 }>();
@@ -20,14 +21,23 @@ const payment = computed(() => {
   }, 0);
 });
 
+const boardRotation = computed(() => {
+  return chooseRotation(props.gameState, props.player);
+});
+
 const emit = defineEmits<{
   (e: "cancel"): void;
   (e: "submit", payment: number): void;
+  (e: "rotate-board"): void;
 }>();
 </script>
 
 <template>
-  <Board v-model="selectedSpaces">
+  <Board
+    v-model="selectedSpaces"
+    :rotation="boardRotation"
+    @rotate="emit('rotate-board')"
+  >
     <template #center>
       <div class="controls">
         <p class="title">Unmortgage</p>

@@ -79,6 +79,7 @@ function closeMenu(newGameState?: GameState) {
       @submit="
         (earnings) => closeMenu(gameState.afterMortgaging(player, earnings))
       "
+      @rotate-board="emit('update:gameState', gameState.afterRotatingBoard())"
     >
     </MortgageMenu>
     <UnmortgageMenu
@@ -89,6 +90,7 @@ function closeMenu(newGameState?: GameState) {
       @submit="
         (payment) => closeMenu(gameState.afterUnmortgaging(player, payment))
       "
+      @rotate-board="emit('update:gameState', gameState.afterRotatingBoard())"
     >
     </UnmortgageMenu>
     <MainControls

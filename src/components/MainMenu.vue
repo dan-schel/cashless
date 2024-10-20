@@ -40,7 +40,7 @@ function handleSubmitLobby(requestedPlayers: {
     players.push(new Player(uuid(), 1500, "right"));
   }
 
-  const newGame = new GameStateHistory(new GameState(players, 0), [], []);
+  const newGame = new GameStateHistory(new GameState(players, 0, 0), [], []);
 
   emit("gameReady", newGame);
 }

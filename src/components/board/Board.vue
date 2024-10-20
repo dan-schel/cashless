@@ -11,18 +11,22 @@ import MdiTrainCrossingLight from "../icons/MdiTrainCrossingLight.vue";
 import MdiTap from "../icons/MdiTap.vue";
 import HeroiconsBoltSolid from "../icons/HeroiconsBoltSolid.vue";
 import MdiCheckBold from "../icons/MdiCheckBold.vue";
+import type { BoardRotation } from "@/data/game-state";
+import GridIconsRotate from "../icons/GridIconsRotate.vue";
 
 const props = defineProps<{
+  rotation: BoardRotation;
   modelValue: BoardSpaceId[];
 }>();
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: BoardSpaceId[]): void;
+  (e: "rotate"): void;
 }>();
 
 const rotatedSpaces = computed(() => {
   return spaces.map((space) => {
-    const position = rotatePosition(0, space);
+    const position = rotatePosition(props.rotation, space);
     const cssClasses = ["space"];
 
     if (space.category !== null) {
@@ -46,6 +50,11 @@ const rotatedSpaces = computed(() => {
 
     const isSelected = props.modelValue.includes(space.id);
 
+    const isRotateButtonSpace = position.column === 10 && position.row === 0;
+    if (isRotateButtonSpace) {
+      cssClasses.push("rotate-button-space");
+    }
+
     return {
       ...space,
       row: position.row,
@@ -54,6 +63,7 @@ const rotatedSpaces = computed(() => {
       isHouse,
       isMortgagable,
       isSelected,
+      isRotateButtonSpace,
     };
   });
 });
@@ -94,6 +104,11 @@ function handleSpaceClick(id: BoardSpaceId) {
         <MdiTap v-if="space.id === 'utility-2'"></MdiTap>
         <div class="selected-check" v-if="space.isSelected">
           <MdiCheckBold></MdiCheckBold>
+        </div>
+        <div class="rotate-button-container" v-if="space.isRotateButtonSpace">
+          <button class="rotate-button" @click="emit('rotate')">
+            <GridIconsRotate></GridIconsRotate>
+          </button>
         </div>
       </button>
     </div>
@@ -218,6 +233,31 @@ function handleSpaceClick(id: BoardSpaceId) {
     svg {
       font-size: 2.5rem;
       color: var(--color-on-accent);
+    }
+  }
+
+  &.rotate-button-space {
+    align-items: center;
+    justify-content: center;
+  }
+  .rotate-button-container {
+    background-color: var(--color-board);
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+  .rotate-button {
+    @include template.button-filled-neutral;
+    width: 3rem;
+    height: 3rem;
+    --button-rounding: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    svg {
+      font-size: 1.5rem;
+
+      // Makes the icon look more centered.
+      margin-left: -0.1em;
+      margin-top: -0.1em;
     }
   }
 }

@@ -122,6 +122,7 @@ function handleSpaceClick(id: BoardSpaceId) {
   grid-template-rows: 5fr repeat(9, 4fr) 5fr;
 }
 .center {
+  display: grid;
   grid-column: 2 / span 9;
   grid-row: 2 / span 9;
 }

@@ -3,7 +3,7 @@ import { GameState } from "@/data/game-state";
 import Board from "../board/Board.vue";
 import type { BoardSpaceId } from "../board/spaces";
 import { computed, ref } from "vue";
-import { mortgagePrices } from "../board/prices";
+import { unmortgagePrices } from "../board/prices";
 import type { Player } from "@/data/player";
 import { formatMoney } from "../utils";
 
@@ -14,15 +14,15 @@ defineProps<{
 
 const selectedSpaces = ref<BoardSpaceId[]>([]);
 
-const earnings = computed(() => {
+const payment = computed(() => {
   return selectedSpaces.value.reduce((total, space) => {
-    return total + mortgagePrices[space];
+    return total + unmortgagePrices[space];
   }, 0);
 });
 
 const emit = defineEmits<{
   (e: "cancel"): void;
-  (e: "submit", earnings: number): void;
+  (e: "submit", payment: number): void;
 }>();
 </script>
 
@@ -30,20 +30,21 @@ const emit = defineEmits<{
   <Board v-model="selectedSpaces">
     <template #center>
       <div class="controls">
-        <p class="title">Mortgage</p>
+        <p class="title">Unmortgage</p>
         <p class="instructions" v-if="selectedSpaces.length == 0">
-          (Choose the spaces on the board you wish to mortgage.)
+          (Choose the spaces on the board you wish to unmortgage.)
         </p>
         <template v-else>
           <p class="mortgage-sentence">
-            By mortgaging
+            Unmortgaging
             {{
               selectedSpaces.length > 1
                 ? `these ${selectedSpaces.length} properties`
                 : "this property"
-            }}, you will earn:
+            }}
+            costs:
           </p>
-          <p class="money">${{ earnings }}</p>
+          <p class="money">${{ payment }}</p>
         </template>
         <p class="balance-sentence">
           {{
@@ -52,17 +53,17 @@ const emit = defineEmits<{
               : "This brings your total balance to:"
           }}
         </p>
-        <p class="money">{{ formatMoney(player.balance + earnings) }}</p>
+        <p class="money">{{ formatMoney(player.balance - payment) }}</p>
         <div class="actions">
           <button class="cancel" @click="emit('cancel')">
             <p>Cancel</p>
           </button>
           <button
             class="submit"
-            @click="emit('submit', earnings)"
+            @click="emit('submit', payment)"
             :disabled="selectedSpaces.length == 0"
           >
-            <p>Mortgage</p>
+            <p>Unmortgage</p>
           </button>
         </div>
       </div>

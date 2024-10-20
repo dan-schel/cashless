@@ -74,4 +74,12 @@ export class GameState {
       }),
     );
   }
+
+  afterMortgaging(player: Player, amount: number): GameState {
+    return this.withPlayer(player.with({ balance: player.balance + amount }));
+  }
+
+  afterUnmortgaging(player: Player, amount: number): GameState {
+    return this.withPlayer(player.with({ balance: player.balance - amount }));
+  }
 }

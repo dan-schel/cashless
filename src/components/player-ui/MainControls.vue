@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Player } from "@/data/player";
+import { formatMoney } from "../utils";
 
 defineProps<{
   player: Player;
@@ -17,11 +18,7 @@ defineEmits<{
 <template>
   <div class="controls">
     <p class="balance">
-      {{
-        player.balance >= 0
-          ? `$${player.balance.toFixed()}`
-          : `-$${Math.abs(player.balance).toFixed()}`
-      }}
+      {{ formatMoney(player.balance) }}
     </p>
     <div class="primary-actions">
       <button @click="() => $emit('pay')">
